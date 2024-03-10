@@ -18,7 +18,4 @@ const mapDefault = [
   [400, 40]
 ]
 
-
-export {
-  mapDefault
-}
+export { mapDefault }

@@ -1,5 +1,4 @@
-import { mapDefault } from "./maps.js"
-
+import { mapDefault } from './maps.js'
 
 function initializeMap(ctx) {
   const sphere = new Image()
@@ -11,6 +10,4 @@ function initializeMap(ctx) {
   sphere.src = '/images/sphere40.png'
 }
 
-export {
-  initializeMap
-}
+export { initializeMap }

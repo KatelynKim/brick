@@ -1,4 +1,5 @@
-import { Player, Ball } from './classes.js'
+import Ball from './classes/Ball.js'
+import Player from './classes/Player.js'
 import { initializeMap } from './helpers.js'
 
 const playerCanvas = document.getElementById('canvasA')
@@ -11,7 +12,12 @@ socket.on('connect', () => {
   console.log('Connected to client')
   socket.on('updateConnections', (players) => {
     console.log('Updating connections on the client')
-    playerCanvasCtx.clearRect(0, 0, playerCanvas.clientWidth, playerCanvas.clientHeight)
+    playerCanvasCtx.clearRect(
+      0,
+      0,
+      playerCanvas.clientWidth,
+      playerCanvas.clientHeight
+    )
     const playersFound = {}
     const clientBalls = {}
     for (let id in players) {
