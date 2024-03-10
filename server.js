@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
     connectedPlayers.id = socket.id
   }
   io.emit('updateConnections', connectedPlayers)
-  })
+})
 
 const PORT = 3000
 server.listen(PORT, () => {
