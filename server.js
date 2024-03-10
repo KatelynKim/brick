@@ -17,23 +17,19 @@ app.use(express.static(join(__dirname, 'public')))
 
 app.get('/', (req, res) => res.sendFile(join(__dirname, 'index.html')))
 
-// Define a connection event handler
+const connectedPlayers = {}
+
 io.on('connection', (socket) => {
-  console.log('User Connected To (server)')
-
-  socket.emit('serverToClient', 'Hello, client!')
-
-  socket.on('clientToServer', (data) => {
-    console.log(data)
+  if (Object.keys(connectedPlayers).length === 0) {
+    console.log('First player joined', socket.id)
+    connectedPlayers.id = socket.id
+  } else if (Object.keys(connectedPlayers).length === 1) {
+    console.log('Second player joined', socket.id)
+    connectedPlayers.id = socket.id
+  }
+  io.emit('updateConnections', connectedPlayers)
   })
 
-  socket.on('clientToClient', (data) => {
-    console.log('client to client', data)
-    socket.broadcast.emit('serverToClient', data)
-  })
-})
-
-// Start the server
 const PORT = 3000
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
