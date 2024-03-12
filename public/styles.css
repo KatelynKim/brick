@@ -18,5 +18,5 @@ body {
 
 .game-container canvas {
   background-color: black;
-  image-rendering: pixelated"
+  image-rendering: pixelated;
 }

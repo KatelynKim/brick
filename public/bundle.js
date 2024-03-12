@@ -1,1 +1,66 @@
-(()=>{"use strict";const t=class{constructor(t){this.ctx=t,this.x=250,this.y=700,this.radius=10,t.fillStyle="blue"}draw(){this.ctx.beginPath(),this.ctx.arc(this.x,this.y,this.radius,0,2*Math.PI),this.ctx.fill()}},e=class{constructor(t){this.x=200,this.y=750,this.ctx=t,this.thickness=20,this.length=20}draw(){this.ctx.lineWidth=this.thickness,this.ctx.lineCap="round",this.ctx.strokeStyle="red",this.ctx.beginPath(),this.ctx.moveTo(this.x,this.y),this.ctx.lineTo(this.x+this.length,this.y),this.ctx.stroke(),console.log("drew a line")}update(){this.x+=this.dx,this.draw()}},i=[[0,0],[40,0],[80,0],[160,0],[200,0],[240,0],[320,0],[400,0],[0,40],[40,40],[80,40],[160,40],[200,40],[240,40],[320,40],[400,40]];function s(t){const e=new Image;e.onload=()=>{i.forEach((i=>{t.drawImage(e,i[0],i[1])}))},e.src="/images/sphere40.png"}const n=document.getElementById("canvasA"),o=n.getContext("2d"),c=window.devicePixelRatio;n.getContext("2d").scale(c,c),socket.on("connect",(()=>{console.log("Connected to client"),socket.on("updateConnections",(i=>{console.log("Updating connections on the client"),o.clearRect(0,0,n.clientWidth,n.clientHeight);const c={},l={};for(let n in i){if(void 0===l[n]&&n!==socket.id){l[n]=new e(o),l.id.draw(),new t(o).draw();const i=new Image;i.onload=()=>{o.drawImage(i,250,750)},i.src="images/arrow.png"}s(o),c[n]=!0}for(let t in l)c[t]||(l[t].remove(),delete l[t])}))}));const l=document.getElementById("helloButton");socket.on("serverToClient",(t=>{alert(t)})),socket.emit("clientToServer","Hello, server!"),l.addEventListener("click",(()=>{socket.emit("clientToClient","Hello to the fellow clients!")}))})();
+;(() => {
+  'use strict'
+  const t = document.getElementById('canvasA'),
+    s = t.getContext('2d')
+  let i
+  t.addEventListener('mousemove', (t) => {
+    i = t.offsetX
+  })
+  const e = new (class {
+      constructor(t) {
+        ;(this.x = 200),
+          (this.y = 750),
+          (this.ctx = t),
+          (this.thickness = 20),
+          (this.length = 60),
+          (this.dx = 8)
+      }
+      draw() {
+        ;(this.ctx.lineWidth = this.thickness),
+          (this.ctx.strokeStyle = 'red'),
+          this.ctx.beginPath(),
+          this.ctx.moveTo(this.x, this.y),
+          this.ctx.lineTo(this.x + this.length, this.y),
+          this.ctx.stroke()
+      }
+      update(s) {
+        s < t.width / 2 && this.x >= 0
+          ? (this.x -= this.dx)
+          : this.x <= t.width - this.length && (this.x += this.dx),
+          this.draw()
+      }
+    })(s),
+    h = new (class {
+      constructor(t) {
+        ;(this.ctx = t),
+          (this.x = 240),
+          (this.y = 500),
+          (this.dy = 1),
+          (this.acceleration = 0.05),
+          (this.radius = 10),
+          (t.fillStyle = 'blue')
+      }
+      draw() {
+        this.ctx.beginPath(),
+          this.ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI),
+          this.ctx.fill()
+      }
+      update() {
+        ;(this.dy += this.acceleration), (this.y += this.dy), this.draw()
+      }
+    })(s)
+  function n() {
+    s.clearRect(0, 0, t.width, 800),
+      h.update(),
+      e.update(i),
+      window.requestAnimationFrame(n)
+  }
+  socket.on('connect', () => {
+    socket.on('updateConnections', (t) => {
+      e.draw()
+    })
+  }),
+    document.addEventListener('keydown', (t) => {
+      'Enter' === t.key && window.requestAnimationFrame(n)
+    })
+})()
