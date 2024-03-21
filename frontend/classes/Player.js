@@ -2,30 +2,28 @@ import { playerCanvas } from '../utils/canvas.js'
 
 class Player {
   constructor(ctx) {
-    this.x = 200
+    this.x = playerCanvas.clientWidth / 2
     this.y = 750
     this.ctx = ctx
     this.thickness = 20
     this.length = 60
-    this.dx = 15
-    this.prevX
-    playerCanvas.addEventListener('mousemove', this.handleMouseMove.bind(this))
+    this.dx = 10
+    this.isCursorOutOfLeftBound = false
+    this.isCursorOutOfRightBound = false
+    this.isDirectionChanged = false
+    document.addEventListener('mousemove', this.handleMouseMove.bind(this))
   }
 
   handleMouseMove(event) {
-    const cursorPos = event.offsetX
-    const isMovingLeft = event.movementX < 0
-    if (isMovingLeft) {
-      if (this.x > cursorPos) {
-        this.x -= this.dx
-      }
-    } else {
-      if (
-        this.x <= cursorPos &&
-        this.x + this.length <= playerCanvas.clientWidth
-      ) {
-        this.x += this.dx
-      }
+    const cursorPos = event.clientX - playerCanvas.getBoundingClientRect().x - this.length / 2
+    if (cursorPos <= 0) {
+      this.x = 0
+    }
+    else if ( cursorPos >= playerCanvas.clientWidth - this.length) {
+      this.x = playerCanvas.clientWidth - this.length
+    }
+    else {
+      this.x = cursorPos
     }
   }
 

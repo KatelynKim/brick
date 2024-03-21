@@ -11,7 +11,7 @@ body {
 
 .game-container {
   border: 1px solid black;
-  width: 880px;
+  width: 480px;
   height: 800px;
   margin: 0 auto;
 }
@@ -19,5 +19,4 @@ body {
 .game-container canvas {
   background-color: black;
   image-rendering: pixelated;
-  cursor: none;
 }
