@@ -3,9 +3,10 @@ class Ball {
     this.ctx = ctx
     this.x = 240
     this.y = 500
+    this.dx = 0
     this.dy = 1
-    this.acceleration = 0.05
-
+    this.angle = 90
+    this.speed = this.dy
     this.radius = 10
     ctx.fillStyle = 'blue'
   }
@@ -17,7 +18,7 @@ class Ball {
   }
 
   update() {
-    this.dy += this.acceleration
+    this.x += this.dx
     this.y += this.dy
     this.draw()
   }

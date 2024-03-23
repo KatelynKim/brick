@@ -1,9 +1,10 @@
 import Ball from './classes/Ball.js'
 import Player from './classes/Player.js'
 import { playerCanvas, playerCanvasCtx } from './utils/canvas.js'
+import { handleCollisions } from './utils/collision.js'
 
 const player = new Player(playerCanvasCtx)
-const playerBall = new Ball(playerCanvasCtx)
+const ball = new Ball(playerCanvasCtx)
 
 socket.on('connect', () => {
   socket.on('updateConnections', (players) => {
@@ -14,9 +15,9 @@ socket.on('connect', () => {
 
 function render() {
   playerCanvasCtx.clearRect(0, 0, playerCanvas.width, 800)
-  playerBall.update()
+  ball.update()
   player.draw()
-
+  handleCollisions(ball, player)
   window.requestAnimationFrame(render)
 }
 
