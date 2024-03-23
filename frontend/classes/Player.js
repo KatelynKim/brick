@@ -2,7 +2,7 @@ import { playerCanvas } from '../utils/canvas.js'
 
 class Player {
   constructor(ctx) {
-    this.x = playerCanvas.clientWidth / 2
+    this.x = playerCanvas.clientWidth / 2 - 30
     this.y = 750
     this.ctx = ctx
     this.thickness = 20

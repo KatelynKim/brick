@@ -1,10 +1,13 @@
+import { playerCanvas } from "../utils/canvas.js"
+
 class Ball {
   constructor(ctx) {
     this.ctx = ctx
     this.x = 240
     this.y = 500
-    this.dy = 1
-    this.acceleration = 0.05
+    this.dy = 5
+    this.angle = 90
+    this.dx = 0
 
     this.radius = 10
     ctx.fillStyle = 'blue'
@@ -17,7 +20,9 @@ class Ball {
   }
 
   update() {
-    this.dy += this.acceleration
+    // if (this.x - this.radius <= playerCanvas.getBoundingClientRect().x)
+
+    this.x += this.dx
     this.y += this.dy
     this.draw()
   }
