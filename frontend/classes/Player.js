@@ -11,18 +11,18 @@ class Player {
     this.isCursorOutOfLeftBound = false
     this.isCursorOutOfRightBound = false
     this.isDirectionChanged = false
+    this.top = this.y - this.thickness / 2
     document.addEventListener('mousemove', this.handleMouseMove.bind(this))
   }
 
   handleMouseMove(event) {
-    const cursorPos = event.clientX - playerCanvas.getBoundingClientRect().x - this.length / 2
+    const cursorPos =
+      event.clientX - playerCanvas.getBoundingClientRect().x - this.length / 2
     if (cursorPos <= 0) {
       this.x = 0
-    }
-    else if ( cursorPos >= playerCanvas.clientWidth - this.length) {
+    } else if (cursorPos >= playerCanvas.clientWidth - this.length) {
       this.x = playerCanvas.clientWidth - this.length
-    }
-    else {
+    } else {
       this.x = cursorPos
     }
   }

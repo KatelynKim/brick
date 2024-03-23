@@ -1,9 +1,10 @@
 import Ball from './classes/Ball.js'
 import Player from './classes/Player.js'
 import { playerCanvas, playerCanvasCtx } from './utils/canvas.js'
+import { handleCollisions } from './utils/collision.js'
 
 const player = new Player(playerCanvasCtx)
-const playerBall = new Ball(playerCanvasCtx)
+const ball = new Ball(playerCanvasCtx)
 
 socket.on('connect', () => {
   socket.on('updateConnections', (players) => {
@@ -14,32 +15,9 @@ socket.on('connect', () => {
 
 function render() {
   playerCanvasCtx.clearRect(0, 0, playerCanvas.width, 800)
-  playerBall.update()
+  ball.update()
   player.draw()
-
-  // Handle collision between the ball and the player
-  if (playerBall.y + playerBall.radius >= player.y - player.thickness / 2 &&
-    playerBall.x >= player.x && playerBall.x <= player.x + player.length
-  ) {
-    const angle = 90- (45/(player.length/2)) * (playerBall.x - player.x - player.length/2)
-    playerBall.dx = playerBall.dy / Math.tan(Math.PI * angle / 180 )
-    playerBall.dy = Math.sqrt(5**2 - playerBall.dx**2) * -1
-    console.log('plyareBall.dy:', playerBall.dy)
-
-  }
-  if(playerBall.x - playerBall.radius <= 0){
-    playerBall.dx *= -1
-  }
-  if(playerBall.y - playerBall.radius <= 0){
-    playerBall.dy *= -1
-  }
-  if(playerBall.x + playerBall.radius >= playerCanvas.clientWidth){
-    playerBall.dx *= -1
-  }
-
-
-
-
+  handleCollisions(ball, player)
   window.requestAnimationFrame(render)
 }
 
