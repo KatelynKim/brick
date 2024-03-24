@@ -3,7 +3,7 @@ import { playerCanvas } from '../utils/canvas.js'
 class Player {
   constructor(ctx) {
     this.x = playerCanvas.clientWidth / 2 - 30
-    this.y = 750
+    this.y = 800
     this.ctx = ctx
     this.thickness = 20
     this.length = 60
@@ -29,7 +29,7 @@ class Player {
 
   draw() {
     this.ctx.lineWidth = this.thickness
-    this.ctx.strokeStyle = 'red'
+    this.ctx.strokeStyle = 'white'
     this.ctx.beginPath()
     this.ctx.moveTo(this.x, this.y)
     this.ctx.lineTo(this.x + this.length, this.y)
