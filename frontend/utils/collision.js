@@ -1,5 +1,6 @@
 import Ball from '../classes/Ball.js'
 import Player from '../classes/Player.js'
+import { mapDefault } from '../maps.js'
 import { playerCanvas } from './canvas.js'
 
 /**
@@ -34,6 +35,19 @@ function handleCollisions(ball, player) {
   // Ball has hit the upper wall
   if (ball.y - ball.radius <= 0) {
     ball.dy *= -1
+  }
+
+  // Ball has hit a bubble
+  for (const bubble of Object.values(mapDefault)) {
+    const distance = Math.sqrt(
+      Math.abs(bubble.centerX - ball.x) ** 2 +
+        Math.abs(bubble.centerY - ball.y) ** 2
+    )
+    if (bubble.hp > 0 && distance <= bubble.radius + ball.radius) {
+      bubble.setHp(0)
+      ball.dx *= -1
+    }
+    bubble.draw()
   }
 }
 

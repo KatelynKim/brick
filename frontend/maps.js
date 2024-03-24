@@ -1,21 +1,23 @@
-const mapDefault = [
-  [0, 0],
-  [40, 0],
-  [80, 0],
-  [160, 0],
-  [200, 0],
-  [240, 0],
-  [320, 0],
-  [400, 0],
+import Bubble from './classes/Bubble.js'
 
-  [0, 40],
-  [40, 40],
-  [80, 40],
-  [160, 40],
-  [200, 40],
-  [240, 40],
-  [320, 40],
-  [400, 40]
-]
+/**
+ * Map of bubbles to pop.
+ * 20 Rows * 12 Columns
+ * x= 0, 40, 80, ... , 480
+ * y= 0, 40, 80, ... , 800
+ */
+const coordinates = {}
+const ROWS = 20
+const COLS = 12
+
+for (let i = 0; i <= COLS; i++) {
+  for (let j = 0; j <= ROWS; j++) {
+    coordinates[`c${i}r${j}`] = new Bubble(i * 40, j * 40)
+  }
+}
+
+const mapDefault = { ...coordinates }
+mapDefault[`c0r0`].setHp(1)
+mapDefault[`c11r15`].setHp(1)
 
 export { mapDefault }

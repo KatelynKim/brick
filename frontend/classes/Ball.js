@@ -4,11 +4,11 @@ class Ball {
     this.x = 240
     this.y = 500
     this.dx = 0
-    this.dy = 1
+    this.dy = 5
     this.angle = 90
     this.speed = this.dy
     this.radius = 10
-    ctx.fillStyle = 'blue'
+    ctx.fillStyle = 'white'
   }
 
   draw() {
