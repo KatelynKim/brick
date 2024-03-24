@@ -1,5 +1,4 @@
 import Ball from './classes/Ball.js'
-import Bubble from './classes/Bubble.js'
 import Player from './classes/Player.js'
 import { mapDefault } from './maps.js'
 import { playerCanvas, playerCanvasCtx } from './utils/canvas.js'
@@ -7,6 +6,11 @@ import { handleCollisions } from './utils/collision.js'
 
 const player = new Player(playerCanvasCtx)
 const ball = new Ball(playerCanvasCtx)
+
+function drawLoop() {
+  ball.update()
+  player.draw()
+}
 
 setTimeout(() => {
   for (const bubble of Object.values(mapDefault)) {
@@ -28,11 +32,8 @@ function render() {
     playerCanvas.clientWidth,
     playerCanvas.clientHeight
   )
-  ball.update()
-  player.draw()
-  for (const bubble of Object.values(mapDefault)) {
-    bubble.draw()
-  }
+
+  drawLoop()
   handleCollisions(ball, player)
   window.requestAnimationFrame(render)
 }

@@ -1,7 +1,7 @@
 import { playerCanvasCtx } from '../utils/canvas.js'
 
 class Bubble {
-  constructor(x, y, hp) {
+  constructor(x, y, hp = 0) {
     this.image = new Image()
     this.image.src = 'images/sphere40.png'
     this.image.onload = () => {
