@@ -48,13 +48,14 @@ function handleCollisions(ball, player) {
       bubble.setHp(0)
       const quadrant = getQuadrant(ball, bubble)
       updateBallDirection(quadrant, ball)
+      new Audio('sounds/pop.mp3').play()
     }
     bubble.draw()
   }
 }
 
 /**
- * Updates the direction of the ball based on the quadrant on which it has collided with the bubble.
+ * Updates the direction of the ball based on the bubble quadrant it's come into contact with.
  *
  * @param {'UpperLeft' | 'UpperRight' | 'LowerLeft' | 'LowerRight'} quadrant - The ball quadrant in which the collision has occurred
  */
