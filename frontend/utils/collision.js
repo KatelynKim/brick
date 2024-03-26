@@ -48,6 +48,7 @@ function handleCollisions(ball, player) {
       bubble.setHp(0)
       const quadrant = getQuadrant(ball, bubble)
       updateBallDirection(quadrant, ball)
+      new Audio('sounds/pop.mp3').play()
     }
     bubble.draw()
   }
