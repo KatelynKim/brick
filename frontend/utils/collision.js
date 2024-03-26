@@ -3,6 +3,7 @@ import Player from '../classes/Player.js'
 import { mapDefault } from '../maps.js'
 import { playerCanvas } from './canvas.js'
 import { MAX_BALL_ANGLE } from './constants.js'
+import { pop } from './sounds.js'
 
 /**
  *
@@ -48,6 +49,7 @@ function handleCollisions(ball, player) {
       bubble.setHp(0)
       const quadrant = getQuadrant(ball, bubble)
       updateBallDirection(quadrant, ball)
+      new Audio('sounds/pop.mp3').play()
     }
     bubble.draw()
   }
