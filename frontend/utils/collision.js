@@ -1,6 +1,6 @@
 import Ball from '../classes/Ball.js'
 import Player from '../classes/Player.js'
-import { mapDefault } from '../maps.js'
+import { map } from '../maps.js'
 import { playerCanvas } from './canvas.js'
 import { MAX_BALL_ANGLE } from './constants.js'
 
@@ -8,11 +8,18 @@ import { MAX_BALL_ANGLE } from './constants.js'
  *
  * @param {Ball} ball
  * @param {Player} player
+ * @param platforms
  * A function to handle collisions
  */
 
-function handleCollisions(ball, player) {
-  // Ball has hit the player
+function handleCollisions(ball, player, platforms) {
+  handlePlayerCollision(ball, player)
+  handleWallCollision(ball)
+  handleBubbleCollision(ball)
+  handlePlatformCollision(ball, platforms)
+}
+
+function handlePlayerCollision(ball, player) {
   if (
     ball.y + ball.radius == player.top &&
     ball.x >= player.x &&
@@ -24,22 +31,21 @@ function handleCollisions(ball, player) {
     ball.dx = ball.dy / Math.tan((Math.PI * angle) / 180)
     ball.dy = Math.sqrt(ball.speed ** 2 - ball.dx ** 2) * -1
   }
-
-  // Ball has hit the left or right wall
+}
+function handleWallCollision(ball) {
   if (
     ball.x - ball.radius <= 0 ||
     ball.x + ball.radius >= playerCanvas.clientWidth
   ) {
     ball.dx *= -1
   }
-
-  // Ball has hit the upper wall
   if (ball.y - ball.radius <= 0) {
     ball.dy *= -1
   }
+}
 
-  // Ball has hit a bubble
-  for (const bubble of Object.values(mapDefault)) {
+function handleBubbleCollision(ball) {
+  for (const bubble of Object.values(map.coordinates)) {
     const distance = Math.sqrt(
       Math.abs(bubble.centerX - ball.x) ** 2 +
         Math.abs(bubble.centerY - ball.y) ** 2
@@ -54,6 +60,21 @@ function handleCollisions(ball, player) {
   }
 }
 
+function handlePlatformCollision(ball, platforms) {
+  platforms.forEach((platform) => {
+    if (
+      platform.hp > 0 &&
+      ball.y + ball.radius >= platform.y &&
+      ball.x + ball.radius >= platform.x &&
+      ball.x + ball.radius <= platform.x + platform.width
+    ) {
+      platform.hp -= 1
+      ball.dy *= -1
+      map.shiftDown()
+    }
+  })
+}
+
 /**
  * Updates the direction of the ball based on the bubble quadrant it's come into contact with.
  *
@@ -65,25 +86,20 @@ function updateBallDirection(quadrant, ball) {
 
   switch (quadrant) {
     case 'UpperLeft':
-      if (isBallMovingRight) ball.dx *= -1
       if (isBallMovingDownward) ball.dy *= -1
       break
     case 'UpperRight':
-      if (!isBallMovingRight) ball.dx *= -1
       if (isBallMovingDownward) ball.dy *= -1
       break
     case 'LowerLeft':
-      if (isBallMovingRight) ball.dx *= -1
       if (!isBallMovingDownward) ball.dy *= -1
       break
     case 'LowerRight':
-      if (!isBallMovingRight) ball.dx *= -1
       if (!isBallMovingDownward) ball.dy *= -1
       break
     default:
       return
   }
-
 }
 
 function getQuadrant(ball, bubble) {

@@ -1,20 +1,27 @@
 import Ball from './classes/Ball.js'
+import Platform from './classes/Platform.js'
 import Player from './classes/Player.js'
-import { mapDefault } from './maps.js'
+import { convertMapToCoordinates, graphicalMap, map } from './maps.js'
 import { playerCanvas, playerCanvasCtx } from './utils/canvas.js'
 import { handleCollisions } from './utils/collision.js'
 
 const player = new Player(playerCanvasCtx)
 const ball = new Ball(playerCanvasCtx)
+const platforms = []
+for (let i = 0; i < 10; i++) {
+  platforms.push(new Platform(i * 48))
+}
 
 function drawLoop() {
   ball.update()
   player.draw()
+  platforms.forEach((platform) => platform.draw())
 }
 
 setTimeout(() => {
-  for (const bubble of Object.values(mapDefault)) {
+  for (const bubble of Object.values(map.coordinates)) {
     bubble.draw()
+    platforms.forEach((platform) => platform.draw())
   }
 }, 200)
 
@@ -34,7 +41,7 @@ function render() {
   )
 
   drawLoop()
-  handleCollisions(ball, player)
+  handleCollisions(ball, player, platforms)
   window.requestAnimationFrame(render)
 }
 
