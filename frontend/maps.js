@@ -43,6 +43,19 @@ function convertMapToCoordinates(graphicalMap) {
   return coordinates
 }
 
-const mapDefault = convertMapToCoordinates(graphicalMap)
+class Map {
+  constructor() {
+    this.map = graphicalMap
+    this.coordinates = convertMapToCoordinates(graphicalMap)
+  }
 
-export { mapDefault }
+  shiftDown() {
+    for (let bubbleId in this.coordinates) {
+      const bubble = this.coordinates[bubbleId]
+      bubble.updateYpos(bubble.y + 40)
+    }
+  }
+}
+
+const map = new Map()
+export { map }
