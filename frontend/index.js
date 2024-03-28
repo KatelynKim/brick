@@ -1,15 +1,15 @@
 import Ball from './classes/Ball.js'
 import Platform from './classes/Platform.js'
 import Player from './classes/Player.js'
-import { convertMapToCoordinates, graphicalMap, map } from './maps.js'
+import { map } from './maps.js'
 import { playerCanvas, playerCanvasCtx } from './utils/canvas.js'
 import { handleCollisions } from './utils/collision.js'
 
 const player = new Player(playerCanvasCtx)
 const ball = new Ball(playerCanvasCtx)
 const platforms = []
-for (let i = 0; i < 10; i++) {
-  platforms.push(new Platform(i * 48))
+for (let i = 0; i < 6; i++) {
+  platforms.push(new Platform(i * 80))
 }
 
 function drawLoop() {

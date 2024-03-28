@@ -10,7 +10,7 @@ class Platform {
     }
     this.x = x
     this.y = 832
-    this.width = 48
+    this.width = 80
     this.weakPlatformImage = new Image()
     this.weakPlatformImage.src = 'images/platform-weak.png'
     this.weakPlatformImage.onload = () => {
