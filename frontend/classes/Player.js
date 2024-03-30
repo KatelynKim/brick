@@ -1,39 +1,39 @@
-import { playerCanvas } from '../utils/canvas.js'
+import { playerCanvas, playerCanvasCtx } from '../utils/canvas.js'
 
 class Player {
-  constructor(ctx) {
-    this.x = playerCanvas.clientWidth / 2 - 30
-    this.y = 800
-    this.ctx = ctx
-    this.thickness = 20
-    this.length = 60
-    this.dx = 10
-    this.isCursorOutOfLeftBound = false
-    this.isCursorOutOfRightBound = false
-    this.isDirectionChanged = false
-    this.top = this.y - this.thickness / 2
-    document.addEventListener('mousemove', this.handleMouseMove.bind(this))
+  static thickness = 20
+  static length = 60
+  static x = playerCanvas.clientWidth / 2 - 30
+  static y = playerCanvas.clientHeight - 80 + Player.thickness / 2
+  static dx = 10
+  static isCursorOutOfLeftBound = false
+  static isCursorOutOfRightBound = false
+  static isDirectionChanged = false
+  static top = Player.y - Player.thickness / 2
+
+  static init() {
+    playerCanvas.addEventListener('mousemove', Player.handleMouseMove)
   }
 
-  handleMouseMove(event) {
+  static handleMouseMove(event) {
     const cursorPos =
-      event.clientX - playerCanvas.getBoundingClientRect().x - this.length / 2
+      event.clientX - playerCanvas.getBoundingClientRect().x - Player.length / 2
     if (cursorPos <= 0) {
-      this.x = 0
-    } else if (cursorPos >= playerCanvas.clientWidth - this.length) {
-      this.x = playerCanvas.clientWidth - this.length
+      Player.x = 0
+    } else if (cursorPos >= playerCanvas.clientWidth - Player.length) {
+      Player.x = playerCanvas.clientWidth - Player.length
     } else {
-      this.x = cursorPos
+      Player.x = cursorPos
     }
   }
 
-  draw() {
-    this.ctx.lineWidth = this.thickness
-    this.ctx.strokeStyle = 'white'
-    this.ctx.beginPath()
-    this.ctx.moveTo(this.x, this.y)
-    this.ctx.lineTo(this.x + this.length, this.y)
-    this.ctx.stroke()
+  static draw() {
+    playerCanvasCtx.lineWidth = Player.thickness
+    playerCanvasCtx.strokeStyle = 'white'
+    playerCanvasCtx.beginPath()
+    playerCanvasCtx.moveTo(Player.x, Player.y)
+    playerCanvasCtx.lineTo(Player.x + Player.length, Player.y)
+    playerCanvasCtx.stroke()
   }
 }
 
