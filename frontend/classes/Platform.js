@@ -1,18 +1,19 @@
-import { playerCanvasCtx } from '../utils/canvas.js'
+import { playerCanvas, playerCanvasCtx } from '../utils/canvas.js'
 
 class Platform {
   constructor(x) {
     this.hp = 2
     this.image = new Image()
-    this.image.src = 'images/platform.png'
+    this.image.src = 'images/platform80x40.png'
     this.image.onload = () => {
       this.isLoaded = true
     }
-    this.x = x
-    this.y = 832
     this.width = 80
+    this.height = 40
+    this.x = x
+    this.y = playerCanvas.clientHeight - this.height
     this.weakPlatformImage = new Image()
-    this.weakPlatformImage.src = 'images/platform-weak.png'
+    this.weakPlatformImage.src = 'images/platformWeak80x40.png'
     this.weakPlatformImage.onload = () => {
       this.isWeakPlatformLoaded = true
     }
