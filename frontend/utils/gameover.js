@@ -32,5 +32,4 @@ function checkGameoverStatus() {
   }
 }
 
-
 export default checkGameoverStatus

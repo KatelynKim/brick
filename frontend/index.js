@@ -19,15 +19,22 @@ function drawLoop() {
   Object.values(map.coordinates).forEach((bubble) => {
     bubble.draw()
   })
+  Object.values(map.itemCoordinates).forEach((item) => {
+    item.draw()
+  })
 }
 
 setTimeout(() => {
   Ball.draw()
   Player.init()
+
   for (const bubble of Object.values(map.coordinates)) {
     bubble.draw()
-    platforms.forEach((platform) => platform.draw())
   }
+  platforms.forEach((platform) => platform.draw())
+  Object.values(map.itemCoordinates).forEach((item) => {
+    item.draw()
+  })
 }, 200)
 
 socket.on('connect', () => {
