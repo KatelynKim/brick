@@ -15,6 +15,11 @@ class Bubble {
     this.centerY = this.y + this.radius
   }
 
+  updateYpos(y) {
+    this.y = y
+    this.centerY = this.y + this.radius
+  }
+
   setHp(hp) {
     this.hp = hp
   }
